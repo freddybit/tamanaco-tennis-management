@@ -1,0 +1,11 @@
+services:
+  api:
+    build:
+      context: ./api-tamanaco
+      dockerfile: Dockerfile
+    container_name: backend_app
+    restart: always
+    ports:
+      - '3000:3000'
+    env_file:
+      - ./api-tamanaco/.env
