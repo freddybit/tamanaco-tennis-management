@@ -10,8 +10,9 @@ async function bootstrap() {
   logger.log(`------------------------------------------------------------------------`);
   logger.log(`------------------- SERVIDOR INICIADO CON ÉXITO -------------------`);
   logger.log(`------------------------------------------------------------------------`);
-  logger.log(`Puerto: ${process.env.PORT ?? 3000}`);
-  logger.log(`URL local: http://localhost:${process.env.PORT ?? 3000}`);
+  logger.log(`- Port: ${process.env.PORT ?? 3000}`);
+  logger.log(`- Local url: http://localhost:${process.env.PORT ?? 3000}`);
+  logger.log(`- By: Freddy Alejandro Fernández Tovar`);
 
   
 }
