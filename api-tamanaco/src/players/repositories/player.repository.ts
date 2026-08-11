@@ -1,7 +1,7 @@
 import { Repository, UpdateResult } from "typeorm";
 import { Player } from "../entities/player.entity";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Injectable } from "@nestjs/common";
+import { BadGatewayException, Injectable, NotFoundException } from "@nestjs/common";
 
 @Injectable()
 export class PlayerRepository {
@@ -21,7 +21,7 @@ export class PlayerRepository {
     }
 
     async findById(profileKey: number): Promise<Player | null> {
-        return await this.typeOrmRepository.findOne({
+        const player = await this.typeOrmRepository.findOne({
             where: { profileKey },
             relations: {
                 identityDocument: true,
@@ -33,6 +33,11 @@ export class PlayerRepository {
                 place: true
             },
         });
+
+        if (!player) {
+            throw new NotFoundException(`Player with profileKey ${profileKey} not found`);
+        }
+        return player;
     }
 
     async findAll(): Promise<Player[]> {
@@ -47,7 +52,7 @@ export class PlayerRepository {
                 firstLastname: updatePlayer.firstLastname,
                 secondName: updatePlayer.secondName,
                 secondLastname: updatePlayer.secondLastname,
-                birthDate: updatePlayer.birthDate,
+                birthday: updatePlayer.birthday,
                 place_placeKey: updatePlayer.place_placeKey,
                 photoOne: updatePlayer.photoOne,
                 photoTwo: updatePlayer.photoTwo,

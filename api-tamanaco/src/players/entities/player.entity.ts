@@ -7,77 +7,64 @@ import { Place } from "../../shared/entities/place.entity";
 import { PlayerClub } from "../../shared/entities/player-club.entity";
 import { PlayerDouble } from "./player-double.entity";
 
-@Entity()
+@Entity('player')
 export class Player {
-    @PrimaryGeneratedColumn()
-    profileKey: number;
+    @PrimaryGeneratedColumn({ name: 'profilekey' })
+    profileKey!: number;
 
-    @Column()
-    firstName: string;
+    @Column({ name: 'firstname' })
+    firstName!: string;
 
-    @Column({ nullable: true })
-    secondName: string | null;
+    @Column({ name: 'secondname', type: 'varchar', nullable: true })
+    secondName!: string | null;
 
-    @Column()
-    firstLastname: string;
+    @Column({ name: 'firstlastname' })
+    firstLastname!: string;
 
-    @Column({ nullable: true })
-    secondLastname: string | null;
+    @Column({ name: 'secondlastname', type: 'varchar', nullable: true })
+    secondLastname!: string | null;
 
-    @Column({ nullable: true })
-    birthDate: Date | null;
+    @Column({ name: 'birthday', type: 'date', nullable: true })
+    birthday!: Date | null;
 
-    @Column()
-    sex: string;
+    @Column({ name: 'sex' })
+    sex!: string;
 
-    @Column()
-    place_placeKey: number | null;
+    @Column({ name: 'place_placekey', type: 'int', nullable: true })
+    place_placeKey!: number | null;
 
-    @Column({ nullable: true })
-    photoOne: string | null;
+    @Column({ name: 'photoone', type: 'varchar', nullable: true })
+    photoOne!: string | null;
 
-    @Column({ nullable: true })
-    photoTwo: string | null;
+    @Column({ name: 'phototwo', type: 'varchar', nullable: true })
+    photoTwo!: string | null;
 
-    @OneToOne(() => IdentityDocument, (identityDocument) => identityDocument.Player_profileKey)
-    identityDocument: IdentityDocument;
+    @OneToOne(() => IdentityDocument, (identityDocument) => identityDocument.player)
+    identityDocument?: IdentityDocument | null;
 
-    @OneToMany(() => Email,  (email) => email.Player_profileKey)
-    emails: Email[];
+    @OneToMany(() => Email,  (email) => email.player)
+    emails?: Email[];
 
-    @OneToMany(() => Phone, (phone) => phone.Player_profileKey)
-    phones: Phone[];
+    @OneToMany(() => Phone, (phone) => phone.player)
+    phones?: Phone[];
 
-    @OneToMany(() => PlayerClub, (playerClub) => playerClub.Player_profileKey)
-    playerClubs: PlayerClub[];
+    @OneToMany(() => PlayerClub, (playerClub) => playerClub.player)
+    playerClubs?: PlayerClub[];
 
-    @OneToMany(() => Verification, (verification) => verification.Player_profileKey)
-    verifications: Verification[];
+    @OneToMany(() => Verification, (verification) => verification.player)
+    verifications?: Verification[];
 
-    @OneToMany(() => PlayerDouble, (playerDouble) => playerDouble.player_profileKey)
-    playerDoubles: PlayerDouble[];
+    @OneToMany(() => PlayerDouble, (playerDouble) => playerDouble.player)
+    playerDoubles?: PlayerDouble[];
 
     @ManyToOne(() => Place, (place) => place.placeKey)
-    @JoinColumn({ name: 'place_placeKey' })
-    place: Place | null;
+    @JoinColumn({ name: 'place_placekey' })
+    place?: Place | null;
 
-    constructor(profileKey: number,firstName: string,secondName: string,firstLastname: string,secondLastname: string,birthDate: Date,sex: string, place_placeKey: number | null, photoOne: string,photoTwo: string, identityDocument: IdentityDocument, emails: Email[], phones: Phone[], playerClubs: PlayerClub[], verifications: Verification[], playerDoubles: PlayerDouble[], place: Place | null) {
-        this.profileKey = profileKey;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.firstLastname = firstLastname;
-        this.secondLastname = secondLastname;
-        this.birthDate = birthDate;
-        this.sex = sex;
-        this.place_placeKey = place_placeKey;
-        this.photoOne = photoOne;
-        this.photoTwo = photoTwo;
-        this.identityDocument = identityDocument;
-        this.emails = emails;
-        this.phones = phones;
-        this.playerClubs = playerClubs;
-        this.verifications = verifications;
-        this.playerDoubles = playerDoubles;
-        this.place = place;
+    constructor(partial?: Partial<Player>) {
+        if (partial) {
+            Object.assign(this, partial);
+        }
     }
+
 }

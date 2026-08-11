@@ -22,7 +22,7 @@ import { SharedModule } from './shared/shared.module';
             url: dbUrl,
             ssl: {rejectUnauthorized: false,},
             autoLoadEntities: true,
-            synchronize: true,
+            synchronize: false,
           };
         },
     }),

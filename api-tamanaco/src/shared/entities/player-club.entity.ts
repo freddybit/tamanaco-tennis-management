@@ -1,30 +1,31 @@
-import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Club } from "./club.entity";
 import { Player } from "../../players/entities/player.entity";
 
+@Entity('playerclub')
 export class PlayerClub {
-    @PrimaryGeneratedColumn()
-    playerClubKey: number;
+    
+    @PrimaryGeneratedColumn({ name: 'playerclubkey' })
+    playerClubKey!: number;
 
-    @Column()
-    Player_profileKey: number;
+    @Column({ name: 'player_profilekey' })
+    Player_profileKey!: number;
 
-    @Column()
-    Club_clubKey: number;
+    @Column({ name: 'club_clubkey' })
+    Club_clubKey!: number;
 
-    @ManyToOne(() => Player, (player) => player.profileKey)
-    @JoinColumn({ name: 'Player_profileKey' })
-    player: Player;
+    @ManyToOne(() => Player, (player) => player.playerClubs, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'player_profilekey' })
+    player!: Player;
 
-    @ManyToOne(() => Club, (club) => club.clubKey)
-    @JoinColumn({ name: 'Club_clubKey' })
-    club: Club;
+    @ManyToOne(() => Club, (club) => club.playerClubs, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'club_clubkey' })
+    club!: Club;
 
-    constructor(playerClubKey: number, Player_profileKey: number, Club_clubKey: number, player: Player, club: Club) {
-        this.playerClubKey = playerClubKey;
-        this.Player_profileKey = Player_profileKey;
-        this.Club_clubKey = Club_clubKey;
-        this.player = player;
-        this.club = club;
+    constructor(partial?: Partial<PlayerClub>) {
+        if (partial) {
+            Object.assign(this, partial);
+        }
     }
+
 }

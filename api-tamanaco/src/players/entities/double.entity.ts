@@ -1,16 +1,18 @@
-import { OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { PlayerDouble } from "./player-double.entity";
 
+@Entity()
 export class Double {
 
-    @PrimaryGeneratedColumn()
-    doubleKey: number;
+    @PrimaryGeneratedColumn({ name: 'doublekey' })
+    doubleKey!: number;
 
-    @OneToMany(() => PlayerDouble, (playerDouble) => playerDouble.double_doubleKey)
-    playerDoubles: PlayerDouble[];
+    @OneToMany(() => PlayerDouble, (playerDouble) => playerDouble.double)
+    playerDoubles!: PlayerDouble[];
 
-    constructor(doubleKey: number, playerDoubles: PlayerDouble[]) {
-        this.doubleKey = doubleKey;
-        this.playerDoubles = playerDoubles;
+    constructor(partial?: Partial<Double>) {
+        if (partial) {
+            Object.assign(this, partial);
+        }
     }
 }

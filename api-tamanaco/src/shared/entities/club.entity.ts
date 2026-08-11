@@ -2,29 +2,28 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { Place } from "./place.entity";
 import { PlayerClub } from "./player-club.entity";
 
-@Entity()
+@Entity('club')
 export class Club {
-    @PrimaryGeneratedColumn()
-    clubKey: number;
+    @PrimaryGeneratedColumn({ name: 'clubkey' })
+    clubKey!: number;
 
-    @Column()
-    clubName: string;
+    @Column({ name: 'clubname' })
+    clubName!: string;
 
-    @Column()
-    Place_placeKey: number;
+    @Column({ name: 'place_placekey', type: 'int' })
+    Place_placeKey!: number;
 
-    @OneToMany(() => PlayerClub, (playerClub) => playerClub.playerClubKey)
-    playerClubs: PlayerClub[];
+    @OneToMany(() => PlayerClub, (playerClub) => playerClub.club)
+    playerClubs!: PlayerClub[];
 
-    @ManyToOne(() => Place, (place) => place.clubs)
-    @JoinColumn({ name: 'Place_placeKey' })
-    place: Place;
+    @ManyToOne(() => Place, (place) => place.clubs, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'place_placekey' })
+    place!: Place;
 
-    constructor(clubKey: number, clubName: string,  Place_placeKey: number, playerClubs: PlayerClub[], place: Place) {
-        this.clubKey = clubKey;
-        this.clubName = clubName;
-        this.Place_placeKey = Place_placeKey;
-        this.playerClubs = playerClubs;
-        this.place = place;
+    constructor(partial?: Partial<Club>) {
+        if (partial) {
+            Object.assign(this, partial);
+        }
     }
+
 }

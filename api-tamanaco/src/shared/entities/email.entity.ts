@@ -1,33 +1,31 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Player } from "../../players/entities/player.entity";
 
-@Entity()
+@Entity('email')
 export class Email {
 
-    @PrimaryGeneratedColumn()
-    emailKey: number;
+    @PrimaryGeneratedColumn({ name: 'emailkey' })
+    emailKey!: number;
 
-    @Column()
-    username: string;
+    @Column({ name: 'username' })
+    username!: string;
 
-    @Column()
+    @Column({ name: 'atsymbol', type: 'varchar', default: '@', length: 5 })
     atSymbol: string = '@';
 
-    @Column()
-    domainName: string;
+    @Column({ name: 'domainname' })
+    domainName!: string;
 
-    @Column()
-    Player_profileKey: number;
+    @Column({ name: 'player_profilekey' })
+    Player_profileKey!: number;
 
-    @ManyToOne(() => Player, (player) => player.emails)
-    @JoinColumn({ name: "Player_profileKey" })
-    player: Player;
+    @ManyToOne(() => Player, (player) => player.emails, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: "player_profilekey" })
+    player?: Player | null;
 
-    constructor(emailKey: number, username: string, domainName: string, Player_profileKey: number, player: Player) {
-        this.emailKey = emailKey;
-        this.username = username;
-        this.domainName = domainName;
-        this.Player_profileKey = Player_profileKey;
-        this.player = player;
+    constructor(partial?: Partial<Email>) {
+        if (partial) {
+            Object.assign(this, partial);
+        }
     }
 }

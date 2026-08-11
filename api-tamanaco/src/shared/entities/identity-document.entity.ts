@@ -1,29 +1,27 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Player } from "../../players/entities/player.entity";
 
-@Entity()
+@Entity('identitydocument')
 export class IdentityDocument {
-    @PrimaryGeneratedColumn()
-    docKey: number;
+    @PrimaryGeneratedColumn({ name: 'dockey' })
+    docKey!: number;
 
-    @Column()
-    type: string;
+    @Column({ name: 'type' })
+    type!: string;
 
-    @Column()
-    docNumber: string;
+    @Column({ name: 'docnumber' })
+    docNumber!: string;
 
-    @Column()
-    Player_profileKey: number;
+    @Column({ name: 'player_profilekey' })
+    Player_profileKey!: number;
 
-    @OneToOne(() => Player, (player) => player.identityDocument)
-    @JoinColumn({ name: "Player_profileKey" })
-    player: Player;
+    @OneToOne(() => Player, (player) => player.identityDocument, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: "player_profilekey" })
+    player?: Player | null;
 
-    constructor(docKey: number, type: string, docNumber: string, Player_profileKey: number, player: Player) {
-        this.docKey = docKey;
-        this.type = type;
-        this.docNumber = docNumber;
-        this.Player_profileKey = Player_profileKey;
-        this.player = player;
+    constructor(partial?: Partial<IdentityDocument>) {
+        if (partial) {
+            Object.assign(this, partial);
+        }
     }
 }

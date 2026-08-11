@@ -1,25 +1,24 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { Player } from "../../players/entities/player.entity";
 
-@Entity()
+@Entity('verification')
 export class Verification {
-    @PrimaryGeneratedColumn()
-    verificationKey: number;
+    @PrimaryGeneratedColumn({ name: 'verificationkey' })
+    verificationKey!: number;
 
-    @Column()
-    verificationDate: Date;
+    @Column({ name: 'verificationdate' })
+    verificationDate!: Date;
 
-    @Column()
-    Player_profileKey: number;
+    @Column({ name: 'player_profilekey' })
+    Player_profileKey!: number;
 
-    @ManyToOne(() => Player, (player) => player.verifications)
-    @JoinColumn({ name: "Player_profileKey"})
-    player: Player;
+    @ManyToOne(() => Player, (player) => player.verifications, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'player_profilekey' })
+    player!: Player;
 
-    constructor(verificationKey: number, verificationDate: Date, Player_profileKey: number, player: Player) {
-        this.verificationKey = verificationKey;
-        this.verificationDate = verificationDate;
-        this.Player_profileKey = Player_profileKey;
-        this.player = player;
+    constructor(partial?: Partial<Verification>) {
+        if (partial) {
+            Object.assign(this, partial);
+        }
     }
 }

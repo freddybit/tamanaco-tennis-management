@@ -1,27 +1,29 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinColumn, ManyToOne } from "typeorm";
-import { Player } from "./player.entity";
-import { Double } from "./double.entity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Player } from './player.entity';
+import { Double } from './double.entity';
 
-@Entity()
+@Entity('playerdouble')
 export class PlayerDouble {
-    @PrimaryGeneratedColumn()
-    player_profileKey: number;
+  @PrimaryGeneratedColumn({ name: 'playerdoublekey' })
+  playerDoubleKey!: number;
 
-    @Column()
-    double_doubleKey: number;
+  @Column({ name: 'player_profilekey', type: 'int' })
+  player_profileKey!: number;
 
-    @ManyToOne(() => Player, (player) => player.playerDoubles)
-    @JoinColumn({ name: 'player_profileKey' })
-    player: Player;
+  @Column({ name: 'double_doublekey', type: 'int' })
+  double_doubleKey!: number;
 
-    @ManyToOne(() => Double, (double) => double.playerDoubles)
-    @JoinColumn({ name: 'double_doubleKey' })
-    double: Double;
+  @ManyToOne(() => Player, (player) => player.playerDoubles)
+  @JoinColumn({ name: 'player_profilekey' })
+  player!: Player;
 
-    constructor(player_profileKey: number,double_doubleKey: number, player: Player, double: Double) {
-        this.player_profileKey = player_profileKey;
-        this.double_doubleKey = double_doubleKey;
-        this.player = player;
-        this.double = double;
+  @ManyToOne(() => Double, (double) => double.playerDoubles)
+  @JoinColumn({ name: 'double_doublekey' })
+  double!: Double;
+
+  constructor(partial?: Partial<PlayerDouble>) {
+    if (partial) {
+      Object.assign(this, partial);
     }
+  }
 }

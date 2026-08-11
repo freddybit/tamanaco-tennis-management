@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
+import { InjectRepository, TypeOrmModule } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { IdentityDocument } from "../entities/identity-document.entity";
 
@@ -9,7 +9,7 @@ export class IdentityDocumentRepository {
     private typeOrmRepository: Repository<IdentityDocument>;
 
     constructor(
-        @Inject(IdentityDocument)
+        @InjectRepository(IdentityDocument)
         typeOrmRepository: Repository<IdentityDocument>
     ) {
         this.typeOrmRepository = typeOrmRepository;

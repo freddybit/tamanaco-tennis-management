@@ -2,41 +2,36 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMan
 import { Player } from '../../players/entities/player.entity';
 import { Club } from './club.entity';
 
-@Entity()
+@Entity('place')
 export class Place {
-    @PrimaryGeneratedColumn()
-    placeKey: number;
+    @PrimaryGeneratedColumn({ name: 'placekey' })
+    placeKey!: number;
 
-    @Column()
-    type: string;
+    @Column({ name: 'type' })
+    type!: string;
 
-    @Column()
-    name: string;
+    @Column({ name: 'name' })
+    name!: string;
 
-    @Column({ nullable: true })
-    place_placeKey: number | null;
+    @Column({ name: 'place_placekey', nullable: true })
+    place_placeKey!: number | null;
 
-    @OneToMany(() =>  Place, (place) => place.placeKey)
-    places: Place[];
+    @OneToMany(() =>  Place, (place) => place.place)
+    places!: Place[];
 
-    @ManyToOne(() => Place, (place) => place.places)
-    @JoinColumn({ name: "place_placeKey" })
-    place: Place | null;
+    @ManyToOne(() => Place, (place) => place.places, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'place_placekey' })
+    place!: Place | null;
 
     @OneToMany(() => Player, (player) => player.place)
-    players: Player[];
+    players!: Player[];
 
     @OneToMany(() => Club, (club) => club.place)
-    clubs: Club[];
+    clubs!: Club[];
 
-    constructor(placeKey: number, type: string, name: string, place_placeKey: number | null, places: Place[], place: Place | null, players: Player[], clubs: Club[]) {
-        this.placeKey = placeKey;
-        this.type = type;
-        this.name = name;
-        this.place_placeKey = place_placeKey;
-        this.places = places;
-        this.place = place;
-        this.players = players;
-        this.clubs = clubs;
+    constructor(partial?: Partial<Place>) {
+        if (partial) {
+            Object.assign(this, partial);
+        }
     }
 }
