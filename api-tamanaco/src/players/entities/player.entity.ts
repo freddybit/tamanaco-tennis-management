@@ -6,6 +6,7 @@ import { Verification } from "../../shared/entities/verification.entity";
 import { Place } from "../../shared/entities/place.entity";
 import { PlayerClub } from "../../shared/entities/player-club.entity";
 import { PlayerDouble } from "./player-double.entity";
+import { Stats } from "../../shared/entities/stats.entity";
 
 @Entity('player')
 export class Player {
@@ -41,6 +42,9 @@ export class Player {
 
     @OneToOne(() => IdentityDocument, (identityDocument) => identityDocument.player)
     identityDocument?: IdentityDocument | null;
+
+    @OneToOne( () => Stats, (stats) => stats.player)
+    stats?: Stats | null;
 
     @OneToMany(() => Email,  (email) => email.player)
     emails?: Email[];

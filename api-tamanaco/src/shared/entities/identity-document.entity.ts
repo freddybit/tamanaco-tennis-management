@@ -16,7 +16,7 @@ export class IdentityDocument {
     Player_profileKey!: number;
 
     @OneToOne(() => Player, (player) => player.identityDocument, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: "player_profilekey" })
+    @JoinColumn({ name: 'player_profilekey' })
     player?: Player | null;
 
     constructor(partial?: Partial<IdentityDocument>) {
