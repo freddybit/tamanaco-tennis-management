@@ -30,7 +30,9 @@ export class PlayerRepository {
                 playerClubs: true,
                 verifications: true,
                 playerDoubles: true,
-                place: true
+                place: true,
+                stats: true,
+                participations: true,
             },
         });
 

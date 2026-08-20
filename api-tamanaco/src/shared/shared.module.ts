@@ -19,6 +19,9 @@ import { ClubService } from './services/club.service';
 import { EmailService } from './services/email.service';
 import { PhoneService } from './services/phone.service';
 import { IdentityDocumentService } from './services/identity-document.service';
+import { Stats } from './entities/stats.entity';
+import { StatsRepository } from './repositories/stats.repository';
+import { StatsService } from './services/stats.service';
 
 @Module({
   imports: [
@@ -30,6 +33,7 @@ import { IdentityDocumentService } from './services/identity-document.service';
       IdentityDocument,
       PlayerClub,
       Verification,
+      Stats
     ]),
   ],
   controllers: [
@@ -42,11 +46,13 @@ import { IdentityDocumentService } from './services/identity-document.service';
     EmailRepository,
     PhoneRepository,
     IdentityDocumentRepository,
+    StatsRepository,
     PlaceService,
     ClubService,
     EmailService,
     PhoneService,
     IdentityDocumentService,
+    StatsService,
   ],
   exports: [
     TypeOrmModule,

@@ -45,6 +45,7 @@ async create(createPlayerDto: CreatePlayerDto): Promise<Player> {
         place_placeKey: createPlayerDto.place_placeKey ?? null,
         photoOne: createPlayerDto.photoOne ?? null,
         photoTwo: createPlayerDto.photoTwo ?? null,
+        participations: [],
       });
 
       const savedPlayer = await queryRunner.manager.save(Player, newPlayer);
@@ -76,6 +77,23 @@ async create(createPlayerDto: CreatePlayerDto): Promise<Player> {
             Player_profileKey: savedPlayer.profileKey,
           });
         }
+      }
+
+      if (createPlayerDto.stats) {
+        const stats = createPlayerDto.stats;
+        await queryRunner.manager.save('Stats', {
+          matchesPlayed: stats.matchesPlayed,
+          matchesWon: stats.matchesWon,
+          matchesLost: stats.matchesLost,
+          averageMatchesWon: stats.averageMatchesWon,
+          setsWon: stats.setsWon,
+          setsLost: stats.setsLost,
+          averageSetsWon: stats.averageSetsWon,
+          gamesWon: stats.gamesWon,
+          gamesLost: stats.gamesLost,
+          averageGamesWon: stats.averageGamesWon,
+          player_profileKey: savedPlayer.profileKey,
+        });
       }
 
       await queryRunner.commitTransaction();

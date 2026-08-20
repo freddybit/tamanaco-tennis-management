@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlayersModule } from './players/players.module';
 import { SharedModule } from './shared/shared.module';
+import { TournamentsModule } from './tournaments/tournaments.module';
 
 @Module({
     imports: [
@@ -26,6 +27,7 @@ import { SharedModule } from './shared/shared.module';
           };
         },
     }),
+      TournamentsModule,
   ],
   controllers: [],
   providers: [],

@@ -7,6 +7,7 @@ import { Place } from "../../shared/entities/place.entity";
 import { PlayerClub } from "../../shared/entities/player-club.entity";
 import { PlayerDouble } from "./player-double.entity";
 import { Stats } from "../../shared/entities/stats.entity";
+import { Participation } from "../../tournaments/entities/participation.entity";
 
 @Entity('player')
 export class Player {
@@ -60,6 +61,9 @@ export class Player {
 
     @OneToMany(() => PlayerDouble, (playerDouble) => playerDouble.player)
     playerDoubles?: PlayerDouble[];
+
+    @OneToMany(() => Participation, (participation) => participation.player)
+    participations?: Participation[];
 
     @ManyToOne(() => Place, (place) => place.placeKey)
     @JoinColumn({ name: 'place_placekey' })
