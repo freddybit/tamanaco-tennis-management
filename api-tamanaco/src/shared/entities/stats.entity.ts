@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Player } from "../../players/entities/player.entity";
+import { Participation } from "../../tournaments/entities/participation.entity";
 
 @Entity('stats')
 export class Stats {
@@ -43,6 +44,10 @@ export class Stats {
     @OneToOne(() => Player, (player) => player.stats)
     @JoinColumn({ name: 'player_profilekey' })
     player?: Player | null;
+
+    @OneToOne(() => Participation, (participation) => participation.stats)
+    @JoinColumn({ name: 'participation_parkey' })
+    participation?: Participation | null;
 
     constructor(partial?: Partial<Stats>) {
         if (partial) {

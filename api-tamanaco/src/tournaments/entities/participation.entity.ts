@@ -1,6 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Tournament } from "./tournament.entity";
 import { Player } from "../../players/entities/player.entity";
+import { Stats } from "../../shared/entities/stats.entity";
+import { Payment } from "../../payments/entities/payment.entity";
 
 @Entity('participation')
 export class Participation {
@@ -17,6 +19,21 @@ export class Participation {
     @Column({ name: 'tournamentamount', type: 'numeric', precision: 10, scale: 2 })
     tournamentAmount!: number;
 
+    @Column({ name: 'tournament_tourkey', type: 'int'})
+    tournament_tourKey!: number;
+
+    @Column({ name: 'player_profilekey', type: 'int'})
+    player_profileKey!: number;
+
+    @Column({ name: 'double_doublekey', type: 'int' })
+    double_doubleKey!: number;
+
+    @OneToOne(() => Stats, (stats) => stats.participation, { cascade: true })
+    stats!: Stats;
+
+    @OneToMany(() => Payment, (payment) => payment.participation, { cascade: true })
+    payments!: Payment[];
+
     @ManyToOne(() => Tournament, (tour) => tour.participations, { nullable: false })
     @JoinColumn({ name: 'tournament_tourkey' })
     tournament!: Tournament;
@@ -25,4 +42,9 @@ export class Participation {
     @JoinColumn({ name: 'player_profilekey' })
     player!: Player;
 
+    constructor(partial?: Partial<Participation>) {
+        if (partial) {
+            Object.assign(this, partial);
+        }
+    }
 }

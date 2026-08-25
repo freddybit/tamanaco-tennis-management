@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TournamentsService } from './tournaments.service';
-import { TournamentsController } from './tournaments.controller';
+import { TournamentsService } from './services/tournaments.service';
+import { TournamentsController } from './controllers/tournaments.controller';
 import { Participation } from './entities/participation.entity';
 import { Tournament } from './entities/tournament.entity';
 

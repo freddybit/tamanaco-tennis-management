@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { TournamentsService } from './tournaments.service';
-import { CreateTournamentDto } from './dto/create-tournament.dto';
-import { UpdateTournamentDto } from './dto/update-tournament.dto';
+import { TournamentsService } from '../services/tournaments.service';
+import type { CreateTournamentDto } from '../dto/create-tournament.dto';
+import type { UpdateTournamentDto } from '../dto/update-tournament.dto';
 
 @Controller('tournaments')
 export class TournamentsController {
@@ -31,4 +31,5 @@ export class TournamentsController {
   remove(@Param('id') id: string) {
     return this.tournamentsService.remove(+id);
   }
+  
 }

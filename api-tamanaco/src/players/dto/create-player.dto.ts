@@ -15,6 +15,7 @@ export interface CreatePlayerDto {
     photoOne: string | null;
     photoTwo: string | null;
 
+    tennisCategoriesKeys?: number[] | null;
     stats?: CreateStatsDto | null;
     identityDocuments?: CreateIdentityDocumentDto | null;
     emails?: CreateEmailDto[] | null;

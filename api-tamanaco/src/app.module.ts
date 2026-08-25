@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlayersModule } from './players/players.module';
 import { SharedModule } from './shared/shared.module';
 import { TournamentsModule } from './tournaments/tournaments.module';
+import { TennisCategoriesModule } from './tennis-categories/tennis-categories.module';
+import { PaymentsModule } from './payments/payments.module';
 
 @Module({
     imports: [
@@ -28,6 +30,8 @@ import { TournamentsModule } from './tournaments/tournaments.module';
         },
     }),
       TournamentsModule,
+      TennisCategoriesModule,
+      PaymentsModule,
   ],
   controllers: [],
   providers: [],
