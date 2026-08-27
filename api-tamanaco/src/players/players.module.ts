@@ -14,6 +14,7 @@ import { IdentityDocument } from '../shared/entities/identity-document.entity';
 import { Phone } from '../shared/entities/phone.entity';
 import { PlayerClub } from '../shared/entities/player-club.entity';
 import { Verification } from '../shared/entities/verification.entity';
+import { Stats } from '../shared/entities/stats.entity';
 
 @Module({
 imports: [
@@ -28,6 +29,7 @@ imports: [
       PlayerClub,
       Club,
       Verification,
+      Stats
     ]),
     SharedModule,
   ],

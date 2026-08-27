@@ -29,7 +29,8 @@ export class StatsService {
             averageSetsWon: stats.averageSetsWon,
             gamesWon: stats.gamesWon,
             gamesLost: stats.gamesLost,
-            averageGamesWon: stats.averageGamesWon
+            averageGamesWon: stats.averageGamesWon,
+            player_profileKey: player_profileKey
         });
 
         return await queryRunner.manager.save(newStats)

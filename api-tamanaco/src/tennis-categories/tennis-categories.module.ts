@@ -5,10 +5,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TennisCategory } from './entities/tennis-category.entity';
 import { Ranking } from './entities/ranking.entity';
 import { PlayerTennisCategory } from './entities/player-tennis-category.entity';
+import { RankingService } from './services/ranking.service';
+import { PlayerTennisCategoryRepository } from './repositories/player-tennis-categories.repository';
+import { TennisCategoryRepository } from './repositories/tennis-category.repository';
+import { RankingRepository } from './repositories/ranking.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([TennisCategory, Ranking, PlayerTennisCategory])],
   controllers: [TennisCategoriesController],
-  providers: [TennisCategoriesService],
+  providers: [TennisCategoriesService, RankingService, TennisCategoryRepository, RankingRepository, PlayerTennisCategoryRepository],
 })
 export class TennisCategoriesModule {}

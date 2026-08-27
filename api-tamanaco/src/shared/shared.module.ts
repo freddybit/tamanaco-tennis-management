@@ -47,7 +47,7 @@ import { StatsService } from './services/stats.service';
     PhoneRepository,
     IdentityDocumentRepository,
     StatsRepository,
-    PlaceService,
+    PlaceService,  
     ClubService,
     EmailService,
     PhoneService,
@@ -61,6 +61,7 @@ import { StatsService } from './services/stats.service';
     EmailService,
     PhoneService,
     IdentityDocumentService,
+    StatsService,
   ],
 })
 export class SharedModule {}

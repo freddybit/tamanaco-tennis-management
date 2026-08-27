@@ -1,26 +1,57 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTennisCategoryDto } from '../dto/create-tennis-category.dto';
 import { UpdateTennisCategoryDto } from '../dto/update-tennis-category.dto';
+import { TennisCategoryRepository } from '../repositories/tennis-category.repository';
+import { TennisCategory } from '../entities/tennis-category.entity';
 
 @Injectable()
 export class TennisCategoriesService {
-  create(createTennisCategoryDto: CreateTennisCategoryDto) {
-    return 'This action adds a new tennisCategory';
+  
+  private tennisCategoriesRepository: TennisCategoryRepository;
+
+  constructor(tennisCategoriesRepository: TennisCategoryRepository) {
+    this.tennisCategoriesRepository = tennisCategoriesRepository;
   }
 
-  findAll() {
-    return `This action returns all tennisCategories`;
+  async create(createTennisCategoryDto: CreateTennisCategoryDto) {
+    const newTennisCategory = new TennisCategory({
+      categoryName: createTennisCategoryDto.categoryName,
+      description: createTennisCategoryDto.description,
+      type: createTennisCategoryDto.type,
+      ranking_rankingKey: createTennisCategoryDto.ranking_rankingKey,
+    });
+
+    await this.tennisCategoriesRepository.create(newTennisCategory);
+    return newTennisCategory;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tennisCategory`;
+  async findAll() {
+    const tennisCategories = await this.tennisCategoriesRepository.findAll();
+    return tennisCategories;
   }
 
-  update(id: number, updateTennisCategoryDto: UpdateTennisCategoryDto) {
-    return `This action updates a #${id} tennisCategory`;
+  async findOne(catKey: number) {
+    const tennisCategory = await this.tennisCategoriesRepository.findById(catKey);
+    return tennisCategory;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} tennisCategory`;
+  async update(catKey: number, updateTennisCategoryDto: UpdateTennisCategoryDto) {
+    const tennisCategory = await this.tennisCategoriesRepository.findById(catKey);
+    if (!tennisCategory) {
+      throw new Error(`Tennis category with key ${catKey} not found`);
+    }
+    const updatedTennisCategory = Object.assign(tennisCategory, updateTennisCategoryDto);
+    await this.tennisCategoriesRepository.update(updatedTennisCategory);
+    return updatedTennisCategory;
   }
+
+  async remove(catKey: number) {
+    const tennisCategory = await this.tennisCategoriesRepository.findById(catKey);
+    if (!tennisCategory) {
+      throw new Error(`Tennis category with key ${catKey} not found`);
+    }
+    await this.tennisCategoriesRepository.remove(catKey);
+    return { message: `Tennis category with key ${catKey} has been removed` };
+  }
+  
 }

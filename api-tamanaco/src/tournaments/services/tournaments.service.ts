@@ -1,26 +1,41 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTournamentDto } from '../dto/create-tournament.dto';
 import { UpdateTournamentDto } from '../dto/update-tournament.dto';
+import { TournamentRepository } from '../repositories/tournament.repository';
+import { Tournament } from '../entities/tournament.entity';
 
 @Injectable()
 export class TournamentsService {
-  create(createTournamentDto: CreateTournamentDto) {
-    return 'This action adds a new tournament';
+
+  private TournamentRepository: TournamentRepository;
+
+  constructor(TournamentRepository: TournamentRepository) {
+    this.TournamentRepository = TournamentRepository;
   }
 
-  findAll() {
-    return `This action returns all tournaments`;
+  async create(createTournamentDto: CreateTournamentDto) {
+    const newTournament: Tournament = new Tournament({
+      tourName: createTournamentDto.tourName,
+      tourDescription: createTournamentDto.tourDescription ,
+      startDate: createTournamentDto.startDate,
+      tennisCategory_catKey: createTournamentDto.categoryKey,
+    });
+    return await this.TournamentRepository.create(newTournament);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tournament`;
+  async findAll() {
+    return await this.TournamentRepository.findAll();
   }
 
-  update(id: number, updateTournamentDto: UpdateTournamentDto) {
-    return `This action updates a #${id} tournament`;
+  async findOne(tourKey: number) {
+    return await this.TournamentRepository.findById(tourKey);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} tournament`;
+  async update(tourKey: number, updateTournamentDto: UpdateTournamentDto) {}
+
+  async remove(tourKey: number) {
+    return await this.TournamentRepository.remove(tourKey);
   }
+
 }
+

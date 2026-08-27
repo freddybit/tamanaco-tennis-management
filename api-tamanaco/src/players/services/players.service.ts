@@ -7,6 +7,7 @@ import { IdentityDocumentService } from '../../shared/services/identity-document
 import { EmailService } from '../../shared/services/email.service';
 import { PhoneService } from '../../shared/services/phone.service';
 import { DataSource } from 'typeorm';
+import { StatsService } from '../../shared/services/stats.service';
 
 @Injectable()
 export class PlayersService {
@@ -16,12 +17,14 @@ export class PlayersService {
   private readonly identityDocumentService: IdentityDocumentService;
   private readonly emailService: EmailService;
   private readonly phoneService: PhoneService;
+  private readonly statsService: StatsService;
 
-  constructor(playerRepository: PlayerRepository, identityDocumentService: IdentityDocumentService, emailService: EmailService, phoneService: PhoneService, dataSource: DataSource) {
+  constructor(playerRepository: PlayerRepository, identityDocumentService: IdentityDocumentService, emailService: EmailService, phoneService: PhoneService, statsService: StatsService, dataSource: DataSource) {
     this.playerRepository = playerRepository;
     this.identityDocumentService = identityDocumentService;
     this.emailService = emailService;
     this.phoneService = phoneService;
+    this.statsService = statsService;
     this.dataSource = dataSource;
   }
 
@@ -81,7 +84,7 @@ async create(createPlayerDto: CreatePlayerDto): Promise<Player> {
 
       if (createPlayerDto.stats) {
         const stats = createPlayerDto.stats;
-        await queryRunner.manager.save('Stats', {
+        await this.statsService.createWithRunner(queryRunner, {
           matchesPlayed: stats.matchesPlayed,
           matchesWon: stats.matchesWon,
           matchesLost: stats.matchesLost,
@@ -92,8 +95,25 @@ async create(createPlayerDto: CreatePlayerDto): Promise<Player> {
           gamesWon: stats.gamesWon,
           gamesLost: stats.gamesLost,
           averageGamesWon: stats.averageGamesWon,
-          player_profileKey: savedPlayer.profileKey,
-        });
+        }, savedPlayer.profileKey);
+      }
+
+      if (createPlayerDto.tennisCategoriesKeys && createPlayerDto.tennisCategoriesKeys.length > 0) {
+        for (const tennisCategoryKey of createPlayerDto.tennisCategoriesKeys) {
+          await queryRunner.manager.save('PlayerTennisCategory', {
+            player_profileKey: savedPlayer.profileKey,
+            tennisCategory_catKey: tennisCategoryKey,
+          });
+        }
+      }
+
+      if (createPlayerDto.clubsKeys && createPlayerDto.clubsKeys.length > 0) {
+        for (const clubKey of createPlayerDto.clubsKeys) {
+          await queryRunner.manager.save('PlayerClub', {
+            player_profileKey: savedPlayer.profileKey,
+            club_clubKey: clubKey,
+          });
+        }
       }
 
       await queryRunner.commitTransaction();

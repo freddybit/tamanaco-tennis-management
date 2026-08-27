@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { TennisCategoriesService } from '../services/tennis-categories.service';
-import { CreateTennisCategoryDto } from '../dto/create-tennis-category.dto';
-import { UpdateTennisCategoryDto } from '../dto/update-tennis-category.dto';
+import type { CreateTennisCategoryDto } from '../dto/create-tennis-category.dto';
+import type { UpdateTennisCategoryDto } from '../dto/update-tennis-category.dto';
 
 @Controller('tennis-categories')
 export class TennisCategoriesController {
