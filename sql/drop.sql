@@ -1,0 +1,44 @@
+-- =============================================================================
+-- SCRIPT DE LIMPIEZA TOTAL (DROP TABLES CON CASCADE)
+-- Proyecto: Tamanaco Tennis Management (api-tamanaco)
+-- =============================================================================
+
+-- 1. Seguridad, Perfiles y RBAC
+DROP TABLE IF EXISTS ProfileRole CASCADE;
+DROP TABLE IF EXISTS RolePermission CASCADE;
+DROP TABLE IF EXISTS Permission CASCADE;
+DROP TABLE IF EXISTS Role CASCADE;
+DROP TABLE IF EXISTS Profile CASCADE;
+DROP TABLE IF EXISTS Verification CASCADE;
+
+-- 2. Estadísticas, Pagos y Marcadores
+DROP TABLE IF EXISTS Stats CASCADE;
+DROP TABLE IF EXISTS Set CASCADE;
+DROP TABLE IF EXISTS RecordStatusMatch CASCADE;
+DROP TABLE IF EXISTS MatchStatus CASCADE;
+DROP TABLE IF EXISTS PitchMatch CASCADE;
+DROP TABLE IF EXISTS PlayerMatch CASCADE;
+DROP TABLE IF EXISTS Match CASCADE;
+DROP TABLE IF EXISTS Payment CASCADE;
+DROP TABLE IF EXISTS PaymentMethod CASCADE;
+
+-- 3. Torneo, Fases e Inscripciones
+DROP TABLE IF EXISTS StageParticipation CASCADE;
+DROP TABLE IF EXISTS TournamentStage CASCADE;
+DROP TABLE IF EXISTS Participation CASCADE;
+DROP TABLE IF EXISTS Tournament CASCADE;
+DROP TABLE IF EXISTS PlayerTennisCategory CASCADE;
+DROP TABLE IF EXISTS TennisCategory CASCADE;
+DROP TABLE IF EXISTS Ranking CASCADE;
+
+-- 4. Jugadores, Contacto y Clubes
+DROP TABLE IF EXISTS PlayerDouble CASCADE;
+DROP TABLE IF EXISTS Double CASCADE;
+DROP TABLE IF EXISTS PlayerClub CASCADE;
+DROP TABLE IF EXISTS Pitch CASCADE;
+DROP TABLE IF EXISTS Club CASCADE;
+DROP TABLE IF EXISTS phone CASCADE;
+DROP TABLE IF EXISTS IdentityDocument CASCADE;
+DROP TABLE IF EXISTS Email CASCADE;
+DROP TABLE IF EXISTS Player CASCADE;
+DROP TABLE IF EXISTS Place CASCADE;
