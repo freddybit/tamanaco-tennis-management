@@ -1,0 +1,16 @@
+<div class="field-group">
+  <label [for]="id()">
+    {{ label() }}
+    @if (required()) { <span class="required-mark">*</span> }
+  </label>
+  <input
+    [id]="id()"
+    [type]="type()"
+    [placeholder]="placeholder()"
+    [formControl]="control()"
+    [class.invalid]="control().invalid && (control().dirty || control().touched)"
+  />
+  @if (control().invalid && (control().dirty || control().touched)) {
+    <span class="error-text">{{ errorMessage() || 'Campo inválido' }}</span>
+  }
+</div>

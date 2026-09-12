@@ -1,0 +1,264 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-layout">
+  <!-- COLUMNA IZQUIERDA: Datos Básicos e Identificación -->
+  <div class="form-column">
+    <!-- 1. Datos Personales -->
+    <fieldset class="form-section">
+      <legend>Información Personal</legend>
+      <div class="grid-subfields">
+        <form-field
+          id="firstName"
+          label="Primer Nombre"
+          [control]="getControl('firstName')"
+          [required]="true"
+          placeholder="Ej. Carlos"
+        />
+        <form-field
+          id="secondName"
+          label="Segundo Nombre"
+          [control]="getControl('secondName')"
+          placeholder="Ej. Eduardo"
+        />
+        <form-field
+          id="firstLastname"
+          label="Primer Apellido"
+          [control]="getControl('firstLastname')"
+          [required]="true"
+          placeholder="Ej. Mendoza"
+        />
+        <form-field
+          id="secondLastname"
+          label="Segundo Apellido"
+          [control]="getControl('secondLastname')"
+          placeholder="Ej. Silva"
+        />
+        <form-field
+          id="birthday"
+          label="Fecha de Nacimiento"
+          type="date"
+          [control]="getControl('birthday')"
+        />
+        <select-field
+          id="sex"
+          label="Sexo"
+          [control]="getControl('sex')"
+          [options]="sexOptions"
+          [required]="true"
+        />
+      </div>
+    </fieldset>
+
+    <!-- 2. Documento de Identidad -->
+    <fieldset class="form-section">
+      <legend>Documento de Identificación</legend>
+      <div class="grid-subfields">
+        <select-field
+          id="docType"
+          label="Tipo"
+          [control]="getControl('identityDocuments.type')"
+          [options]="docTypeOptions"
+          [required]="true"
+        />
+        <form-field
+          id="docNumber"
+          label="Número de Identidad"
+          [control]="getControl('identityDocuments.docNumber')"
+          [required]="true"
+          placeholder="Ej. 20123456"
+        />
+      </div>
+    </fieldset>
+
+    <fieldset class="form-section">
+      <legend>Ubicación Geográfica</legend>
+      <div class="grid-3">
+        <select-field
+          id="countryKey"
+          label="País"
+          [control]="getControl('countryKey')"
+          [options]="countryOptions()"
+          placeholder="Selecciona país..."
+          [required]="true"
+        />
+        <select-field
+          id="stateKey"
+          label="Estado"
+          [control]="getControl('stateKey')"
+          [options]="stateOptions()"
+          placeholder="Selecciona estado..."
+          [required]="true"
+        />
+        <select-field
+          id="cityKey"
+          label="Ciudad / Municipio"
+          [control]="getControl('place_placeKey')"
+          [options]="cityOptions()"
+          placeholder="Selecciona ciudad..."
+          [required]="true"
+        />
+      </div>
+    </fieldset>
+
+    <fieldset class="form-section">
+      <legend>Fotografías del Jugador</legend>
+      <div class="grid-2">
+        <image-upload-field
+          id="photoOne"
+          label="Foto Principal (Perfil)"
+          (fileSelected)="onPhotoSelected('photoOne', $event)"
+          (fileRemoved)="onPhotoRemoved('photoOne')"
+        />
+        <image-upload-field
+          id="photoTwo"
+          label="Foto Secundaria (Cuerpo entero / Carnet)"
+          (fileSelected)="onPhotoSelected('photoTwo', $event)"
+          (fileRemoved)="onPhotoRemoved('photoTwo')"
+        />
+      </div>
+    </fieldset>
+
+  </div>
+
+  <!-- COLUMNA DERECHA: Canales de Contacto Dinámicos -->
+  <div class="form-column">
+    <fieldset class="form-section">
+      <div class="section-header">
+        <legend>Correos Electrónicos</legend>
+        <button type="button" class="btn-ghost" (click)="addEmail()">+ Agregar correo</button>
+      </div>
+
+      @for (item of emails.controls; track $index) {
+        <div class="dynamic-row">
+          <div class="email-input-group flex-grow">
+            <form-field
+              [id]="'email-user-' + $index"
+              label="Usuario"
+              [control]="getEmailControl($index, 'username')"
+              placeholder="carlos.mendoza"
+              [required]="true"
+            />
+
+            <span class="email-at-separator">@</span>
+
+            <form-field
+              [id]="'email-domain-' + $index"
+              label="Dominio"
+              [control]="getEmailControl($index, 'domainName')"
+              placeholder="gmail.com"
+              [required]="true"
+            />
+          </div>
+
+          @if (emails.length > 1) {
+            <button
+              type="button"
+              class="btn-icon-danger"
+              (click)="removeEmail($index)"
+              title="Eliminar correo"
+            >
+              ✕
+            </button>
+          }
+        </div>
+      }
+    </fieldset>
+
+    <!-- 4. Teléfonos -->
+    <fieldset class="form-section">
+      <div class="section-header">
+        <legend>Teléfonos de Contacto</legend>
+        <button type="button" class="btn-ghost" (click)="addPhone()">+ Agregar teléfono</button>
+      </div>
+
+      @for (item of phones.controls; track $index) {
+        <div class="dynamic-row">
+          <div class="phone-grid flex-grow">
+            <form-field
+              [id]="'phone-area-' + $index"
+              label="País"
+              [control]="getPhoneControl($index, 'areaCode')"
+              placeholder="+58"
+            />
+            <form-field
+              [id]="'phone-op-' + $index"
+              label="Prefijo"
+              [control]="getPhoneControl($index, 'operatorCode')"
+              placeholder="414"
+              [required]="true"
+            />
+            <form-field
+              [id]="'phone-num-' + $index"
+              label="Número"
+              [control]="getPhoneControl($index, 'phoneNumber')"
+              placeholder="1234567"
+              [required]="true"
+            />
+          </div>
+          @if (phones.length > 1) {
+            <button type="button" class="btn-icon-danger" (click)="removePhone($index)" title="Eliminar teléfono">✕</button>
+          }
+        </div>
+      }
+    </fieldset>
+
+    <fieldset class="form-section">
+      <div class="section-header">
+        <legend>Clubes Afiliados</legend>
+        <button type="button" class="btn-ghost" (click)="addClub()">+ Asignar club</button>
+      </div>
+
+      @for (club of clubs.controls; track $index) {
+        <div class="dynamic-row">
+          <div class="flex-grow">
+            <select-field
+              [id]="'club-' + $index"
+              label="Club"
+              [control]="getClubControl($index)"
+              [options]="clubOptions()"
+              placeholder="Selecciona un club afiliado..."
+              [required]="true"
+            />
+          </div>
+          @if (clubs.length > 1) {
+            <button
+              type="button"
+              class="btn-icon-danger"
+              (click)="removeClub($index)"
+              title="Eliminar club"
+            >
+              ✕
+            </button>
+          }
+        </div>
+      }
+    </fieldset>
+
+    <fieldset class="form-section">
+      <legend>Categoría de Tenis</legend>
+      <div class="grid-2">
+        <select-field
+          id="rankingKey"
+          label="Ranking"
+          [control]="getControl('rankingKey')"
+          [options]="rankingOptions()"
+          placeholder="Selecciona ranking..."
+          [required]="true"
+        />
+        <select-field
+          id="categoryKey"
+          label="Categoría Asignada"
+          [control]="getControl('tennisCategory_catKey')"
+          [options]="categoryOptions()"
+          placeholder="Selecciona categoría..."
+          [required]="true"
+        />
+      </div>
+    </fieldset>
+
+  </div>
+
+  <!-- Barra de Botones Abajo (Ocupa todo el ancho) -->
+  <footer class="form-actions">
+    <button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
+    <button type="submit" class="btn-submit" [disabled]="form.invalid">Guardar Jugador</button>
+  </footer>
+</form>

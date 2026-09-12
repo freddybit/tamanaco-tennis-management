@@ -1,0 +1,15 @@
+<article class="page-container">
+  <section class="page-header">
+    <h1>Registrar Nuevo Jugador</h1>
+    <p>Completa la información requerida para dar de alta al jugador en el sistema.</p>
+  </section>
+
+  @if (errorMessage()) {
+    <div class="error-banner">{{ errorMessage() }}</div>
+  }
+
+  <player-create-form
+    (formSubmit)="handlePlayerSubmit($event)"
+    (formCancel)="handleCancel()"
+  />
+</article>
