@@ -3,5 +3,6 @@
   <component name="DataSourcePerFileMappings">
     <file url="file://$PROJECT_DIR$/create.sql" value="6747a761-f084-43e8-a93c-fcc2665b3cde" />
     <file url="file://$PROJECT_DIR$/drop.sql" value="6747a761-f084-43e8-a93c-fcc2665b3cde" />
+    <file url="file://$PROJECT_DIR$/insert-place.sql" value="6747a761-f084-43e8-a93c-fcc2665b3cde" />
   </component>
 </project>

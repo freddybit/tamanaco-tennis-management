@@ -16,9 +16,11 @@ export class TennisCategoriesService {
   async create(createTennisCategoryDto: CreateTennisCategoryDto) {
     const newTennisCategory = new TennisCategory({
       categoryName: createTennisCategoryDto.categoryName,
-      description: createTennisCategoryDto.description,
-      type: createTennisCategoryDto.type,
+      description: createTennisCategoryDto.description || null,
+      type: createTennisCategoryDto.type || null,
       ranking_rankingKey: createTennisCategoryDto.ranking_rankingKey,
+      playerTennisCategories: [],
+      tournaments: [],
     });
 
     await this.tennisCategoriesRepository.create(newTennisCategory);

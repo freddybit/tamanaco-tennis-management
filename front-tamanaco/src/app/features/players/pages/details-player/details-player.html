@@ -1,1 +1,14 @@
-<p>details-player works!</p>
+<article>
+  <section>
+    <img src="path/to/image.jpg" alt="Player Image">
+    <div>
+      <h2> {{ `${player()!.firstName} ${player()!.secondName || ''} ${player()!.firstLastname} ${player()!.secondLastname || ''}`.trim() }}</h2>
+      <div>
+
+        <p><strong>Fecha de nacimiento:</strong> {{ player()!.birthday }}</p>
+        <p><strong>Género:</strong> {{ player()!.sex }}</p>
+
+      </div>
+    </div>
+  </section>
+</article>

@@ -1,4 +1,6 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
+import { StageParticipation } from "./stage-participation";
+import { Tournament } from "./tournament.entity";
 
 @Entity('tournamentstage')
 export class TournamentStage {
@@ -17,9 +19,19 @@ export class TournamentStage {
 
     @Column({ name: 'participation_parkey', type: 'int', nullable: false })
     participation_parKey!: number;
-    
-    @Column({ name: 'participation_tournament_tourkey', type: 'int', nullable: false })
-    participation_tournament_tourKey!: number;
+
+    @Column({ name: 'tournament_tourkey', type: 'int', nullable: false })
+    tournament_tourKey!: number;
+
+    @OneToMany(() => StageParticipation, (stageParticipation) => stageParticipation.TournamentStage, { cascade: true })
+    StageParticipations!: StageParticipation[];
+
+    @OneToMany(() => TournamentStage, (tournamentStage) => tournamentStage.tournamentStage_tournamentStageKey, { cascade: true })
+    SubStages!: TournamentStage[];
+
+    @ManyToOne(() => Tournament, (Tournament) => Tournament.TournamentStages, { nullable: false })
+    @JoinColumn({ name: 'tournament_tourkey' })
+    Tournament!: Tournament;
 
     constructor(partial?: Partial<TournamentStage>){
         if(partial){

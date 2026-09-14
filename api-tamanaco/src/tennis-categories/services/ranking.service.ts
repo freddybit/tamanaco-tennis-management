@@ -1,8 +1,9 @@
+import { Injectable } from "@nestjs/common";
 import { CreateRankingDto } from "../dto/create-ranking.dto";
 import { Ranking } from "../entities/ranking.entity";
 import { RankingRepository } from "../repositories/ranking.repository";
 
-
+@Injectable()
 export class RankingService {
 
     private readonly rankingRepository: RankingRepository;

@@ -27,12 +27,17 @@ export class PlayerRepository {
                 identityDocument: true,
                 emails: true,
                 phones: true,
-                playerClubs: true,
+                playerClubs: {
+                    club: true,
+                },
                 verifications: true,
                 playerDoubles: true,
                 place: true,
                 stats: true,
                 participations: true,
+                playerTennisCategories: {
+                    tennisCategory: true,
+                },
             },
         });
 
@@ -44,6 +49,27 @@ export class PlayerRepository {
 
     async findAll(): Promise<Player[]> {
         return await this.typeOrmRepository.find();
+    }
+
+    async findAllWithRelations(): Promise<Player[]> {
+        return await this.typeOrmRepository.find({
+            relations: {
+                identityDocument: true,
+                emails: true,
+                phones: true,
+                playerClubs: {
+                    club: true,
+                },
+                verifications: true,
+                playerDoubles: true,
+                place: true,
+                stats: true,
+                participations: true,
+                playerTennisCategories: {
+                    tennisCategory: true,
+                },
+            },
+        });
     }
 
     async update(updatePlayer: Player) {

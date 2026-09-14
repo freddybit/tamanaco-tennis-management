@@ -26,6 +26,11 @@ export class PlayersController {
     return this.playersService.findAll();
   }
 
+  @Get('details')
+  findAllWithRelations() {
+    return this.playersService.findAllWithRelations();
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.playersService.findById(id);

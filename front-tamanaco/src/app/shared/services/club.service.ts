@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { environment } from "../../../environment/environment";
+import { environment } from "../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { map, Observable } from "rxjs";
 import { Club } from "../models/club.model";

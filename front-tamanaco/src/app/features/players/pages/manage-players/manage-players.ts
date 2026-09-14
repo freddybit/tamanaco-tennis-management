@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { PlayersTable } from '../../components/players-table/players-table';
 import { PlayersService } from '../../services/players.service';
 import { Player } from '../../../../shared/models/player.model';
+import { Router } from 'express';
 
 @Component({
   selector: 'app-manage-players',
@@ -42,4 +43,5 @@ export class ManagePlayers implements OnInit {
       },
     });
   }
+
 }

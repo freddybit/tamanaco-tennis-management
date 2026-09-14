@@ -40,6 +40,13 @@ export class PlaceService {
         return place;
     }
 
+    async findByParent(parentKey: number) {
+        if (!parentKey) {
+            throw new Error('parentKey is required');
+        }
+        return await this.placeRepository.findByParent(parentKey);
+    }
+
     async findAll() {
         return await this.placeRepository.findAll();
     }

@@ -3,6 +3,7 @@ import { Tournament } from "./tournament.entity";
 import { Player } from "../../players/entities/player.entity";
 import { Stats } from "../../shared/entities/stats.entity";
 import { Payment } from "../../payments/entities/payment.entity";
+import { StageParticipation } from "./stage-participation";
 
 @Entity('participation')
 export class Participation {
@@ -33,6 +34,9 @@ export class Participation {
 
     @OneToMany(() => Payment, (payment) => payment.participation, { cascade: true })
     payments!: Payment[];
+
+    @OneToMany(() => StageParticipation, (stageParticipation) => stageParticipation.Participation, { cascade: true })
+    StageParticipations!: StageParticipation[];
 
     @ManyToOne(() => Tournament, (tour) => tour.participations, { nullable: false })
     @JoinColumn({ name: 'tournament_tourkey' })

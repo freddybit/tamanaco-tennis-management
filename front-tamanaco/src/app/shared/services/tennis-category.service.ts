@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { Observable, map } from "rxjs";
-import { environment } from "../../../environment/environment";
+import { environment } from "../../../environments/environment";
 import { Ranking } from "../models/ranking.model";
 import { TennisCategory } from "../models/tennis-category.model";
 import { SelectOption } from "../ui/molecules/select-field/select-field";

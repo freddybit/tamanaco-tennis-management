@@ -31,6 +31,17 @@ export class PlaceRepository {
         });
     }
 
+    async findByParent(parentKey: number): Promise<Place[]> {
+        return await this.typeOrmRepository.find({
+            where: { place_placeKey: parentKey },
+            relations: {
+                places: true, 
+                players: true,
+                clubs: true
+            }
+        });
+    }
+
     async findAll(): Promise<Place[]> {
         return await this.typeOrmRepository.find();
     }

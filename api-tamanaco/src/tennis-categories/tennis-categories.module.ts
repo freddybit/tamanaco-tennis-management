@@ -9,10 +9,11 @@ import { RankingService } from './services/ranking.service';
 import { PlayerTennisCategoryRepository } from './repositories/player-tennis-categories.repository';
 import { TennisCategoryRepository } from './repositories/tennis-category.repository';
 import { RankingRepository } from './repositories/ranking.repository';
+import { RankingController } from './controllers/ranking.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([TennisCategory, Ranking, PlayerTennisCategory])],
-  controllers: [TennisCategoriesController],
+  controllers: [TennisCategoriesController, RankingController],
   providers: [TennisCategoriesService, RankingService, TennisCategoryRepository, RankingRepository, PlayerTennisCategoryRepository],
 })
 export class TennisCategoriesModule {}

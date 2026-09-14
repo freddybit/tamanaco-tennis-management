@@ -21,6 +21,11 @@ export class PlaceController {
         return await this.placeService.findById(placeKey);
     }
 
+    @Get('parent/:parentKey')
+    async findByParent(@Param('parentKey', ParseIntPipe) parentKey: number) {
+        return await this.placeService.findByParent(parentKey);
+    }
+
     @Delete(':placeKey')
     async delete(@Param('placeKey') placeKey: number) {
         return await this.placeService.deleteById(placeKey);

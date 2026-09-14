@@ -13,7 +13,6 @@ export class BackofficeSidebar {
   toggleSubMenu(sidebar: HTMLElement, submenu: HTMLElement, btn: HTMLElement): void {
     if (!submenu || !btn) return;
 
-    // Comprobamos si ya tiene la clase para ponerla o quitarla (Toggle)
     if (submenu.classList.contains('show')) {
       this.renderer.removeClass(submenu, 'show');
       this.renderer.removeClass(btn, 'rotate');

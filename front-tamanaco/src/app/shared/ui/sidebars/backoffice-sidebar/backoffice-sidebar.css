@@ -137,6 +137,24 @@
   background-color: var(--background-color);
 }
 
+.user-btn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+
+  > h3 {
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+
+  > p {
+    font-size: 0.85em;
+    font-weight: 500;
+    color: var(--deep-color);
+  }
+}
+
 @media(max-width: 800px) {
   body {
     grid-template-columns: 1fr;

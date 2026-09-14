@@ -1,10 +1,7 @@
 
-
 export interface CreateTournamentDto {
-
     tourName: string;
-    tourDescription: string
+    tourDescription: string;
     startDate?: Date;
-
     categoryKey?: number;
 }

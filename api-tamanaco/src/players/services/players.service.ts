@@ -8,6 +8,7 @@ import { EmailService } from '../../shared/services/email.service';
 import { PhoneService } from '../../shared/services/phone.service';
 import { DataSource } from 'typeorm';
 import { StatsService } from '../../shared/services/stats.service';
+import { PlayerClub } from '../../shared/entities/player-club.entity';
 
 @Injectable()
 export class PlayersService {
@@ -82,22 +83,6 @@ async create(createPlayerDto: CreatePlayerDto): Promise<Player> {
         }
       }
 
-      if (createPlayerDto.stats) {
-        const stats = createPlayerDto.stats;
-        await this.statsService.createWithRunner(queryRunner, {
-          matchesPlayed: stats.matchesPlayed,
-          matchesWon: stats.matchesWon,
-          matchesLost: stats.matchesLost,
-          averageMatchesWon: stats.averageMatchesWon,
-          setsWon: stats.setsWon,
-          setsLost: stats.setsLost,
-          averageSetsWon: stats.averageSetsWon,
-          gamesWon: stats.gamesWon,
-          gamesLost: stats.gamesLost,
-          averageGamesWon: stats.averageGamesWon,
-        }, savedPlayer.profileKey);
-      }
-
       if (createPlayerDto.tennisCategoriesKeys && createPlayerDto.tennisCategoriesKeys.length > 0) {
         for (const tennisCategoryKey of createPlayerDto.tennisCategoriesKeys) {
           await queryRunner.manager.save('PlayerTennisCategory', {
@@ -109,12 +94,26 @@ async create(createPlayerDto: CreatePlayerDto): Promise<Player> {
 
       if (createPlayerDto.clubsKeys && createPlayerDto.clubsKeys.length > 0) {
         for (const clubKey of createPlayerDto.clubsKeys) {
-          await queryRunner.manager.save('PlayerClub', {
-            player_profileKey: savedPlayer.profileKey,
-            club_clubKey: clubKey,
+          const playerClub = new PlayerClub({
+            Player_profileKey: savedPlayer.profileKey,
+            Club_clubKey: clubKey,
           });
+          await queryRunner.manager.save(PlayerClub, playerClub);
         }
       }
+
+      await this.statsService.createWithRunner(queryRunner, {
+        matchesPlayed: 0,
+        matchesWon: 0,
+        matchesLost: 0,
+        averageMatchesWon: 0,
+        setsWon: 0,
+        setsLost: 0,
+        averageSetsWon: 0,
+        gamesWon: 0,
+        gamesLost: 0,
+        averageGamesWon: 0,
+      }, savedPlayer.profileKey);
 
       await queryRunner.commitTransaction();
 
@@ -134,6 +133,10 @@ async create(createPlayerDto: CreatePlayerDto): Promise<Player> {
 
   async findAll() {
     return await this.playerRepository.findAll();
+  }
+
+  findAllWithRelations() {
+    return this.playerRepository.findAllWithRelations();
   }
 
   async findById(id: number) {

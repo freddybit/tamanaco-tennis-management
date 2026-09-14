@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import {
   ColumnDef,
   createAngularTable,
@@ -10,6 +10,7 @@ import {
   SortingState,
 } from '@tanstack/angular-table';
 import { Player, PlayerTable } from '../../../../shared/models/player.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'players-table',
@@ -20,10 +21,11 @@ import { Player, PlayerTable } from '../../../../shared/models/player.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayersTable {
-  // 1. Input Signal recibido desde el componente padre
+
+  readonly router = inject(Router);
+
   readonly players = input.required<Player[]>();
 
-  // 2. Transformación reactiva automática: si players() cambia, dataPlayers() se recalcula
   readonly dataPlayers = computed<PlayerTable[]>(() => {
     return this.players().map((player: any) => {
       const rawDoc = player.identityDocument?.docNumber;
@@ -136,5 +138,11 @@ export class PlayersTable {
     if (sortDirection === 'asc') return ' 🔼';
     if (sortDirection === 'desc') return ' 🔽';
     return null;
+  }
+
+  detailsPlayer(player: Player): void {
+    this.router.navigate(['/backoffice/players', player.profileKey], {
+      state: { player },
+    });
   }
 }

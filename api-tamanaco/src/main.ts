@@ -5,6 +5,13 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const logger: Logger = new Logger('Bootstrap');
   const app: any = await NestFactory.create(AppModule);
+
+  app.enableCors({
+    origin: 'http://localhost:4200',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
+
   await app.listen(process.env.PORT ?? 3000);
 
   app.useGlobalPipes(
@@ -22,6 +29,5 @@ async function bootstrap() {
   logger.log(`- Local url: http://localhost:${process.env.PORT ?? 3000}`);
   logger.log(`- By: Freddy Alejandro Fernández Tovar`);
 
-  
 }
 bootstrap();

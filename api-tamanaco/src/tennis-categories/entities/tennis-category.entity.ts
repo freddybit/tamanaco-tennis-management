@@ -13,23 +13,24 @@ export class TennisCategory {
     categoryName!: string;
 
     @Column({ name: 'description', type: 'text', nullable: true })
-    description!: string;
+    description!: string | null;
 
-    @Column({ name: 'type', type: 'varchar', length: 50, nullable: false })
-    type!: string;
+    @Column({ name: 'type', type: 'varchar', length: 50, nullable: true })
+    type!: string | null;
     
     @Column({ name: 'ranking_rankingkey', type: 'int', nullable: false })
     ranking_rankingKey!: number;
-
-    @ManyToOne(() => Ranking, (ranking) => ranking.tennisCategories)
-    @JoinColumn({ name: 'ranking_rankingkey' })
-    ranking!: Ranking;
 
     @OneToMany(() => PlayerTennisCategory, (playerTennisCategory) => playerTennisCategory.tennisCategory)
     playerTennisCategories!: PlayerTennisCategory[];
 
     @OneToMany(() => Tournament, (tournament) => tournament.tennisCategory)
     tournaments!: Tournament[];
+
+    @ManyToOne(() => Ranking, (ranking) => ranking.tennisCategories)
+    @JoinColumn({ name: 'ranking_rankingkey' })
+    ranking!: Ranking;
+
 
     constructor(partial?: Partial<TennisCategory>) {
         if (partial) {
