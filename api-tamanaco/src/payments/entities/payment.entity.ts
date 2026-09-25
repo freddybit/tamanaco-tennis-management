@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { PaymentMethod } from "./payment-method.entity";
 import { Participation } from "../../tournaments/entities/participation.entity";
+import { Product } from "./product.entity";
 
 
 @Entity('payment')
@@ -43,6 +44,10 @@ export class Payment {
     @ManyToOne(() => Participation, participation => participation.payments)
     @JoinColumn({ name: 'participation_parkey' })
     participation!: Participation;
+
+    @ManyToOne(() => Product, product => product.payments)
+    @JoinColumn({ name: 'product_productkey' })
+    product!: Product;
 
     constructor(partial?: Partial<Payment>) {
         if (partial) {

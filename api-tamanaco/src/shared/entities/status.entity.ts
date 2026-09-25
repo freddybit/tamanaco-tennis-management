@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { PlayerStatus } from "./player-status.entity";
 
 @Entity('status')
 export class Status {
@@ -11,6 +12,9 @@ export class Status {
 
     @Column({ name: 'statusdescription', type: 'text'})
     statusDescription!: string;
+
+    @OneToMany(() => PlayerStatus, (playerStatus) => playerStatus.status)
+    playerStatus!: PlayerStatus[];
 
     constructor(partial?: Partial<Status>) {
         if (partial) {

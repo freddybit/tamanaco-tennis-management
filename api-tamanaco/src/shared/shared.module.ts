@@ -22,6 +22,8 @@ import { IdentityDocumentService } from './services/identity-document.service';
 import { Stats } from './entities/stats.entity';
 import { StatsRepository } from './repositories/stats.repository';
 import { StatsService } from './services/stats.service';
+import { PlayerStatus } from './entities/player-status.entity';
+import { Status } from './entities/status.entity';
 
 @Module({
   imports: [
@@ -33,7 +35,9 @@ import { StatsService } from './services/stats.service';
       IdentityDocument,
       PlayerClub,
       Verification,
-      Stats
+      Stats,
+      Status,
+      PlayerStatus,
     ]),
   ],
   controllers: [

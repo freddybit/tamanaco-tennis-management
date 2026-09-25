@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Payment } from "./payment.entity";
 
 @Entity('product')
 export class Product {
@@ -14,6 +15,12 @@ export class Product {
 
     @Column({ name: 'productdate', type: 'timestamp'})
     productDate!: Date;
+ 
+    @Column({ name: 'productprice', type: 'numeric', precision: 10, scale: 2 })
+    productPrice!: number;
+
+    @OneToMany(() => Payment, (payment) => payment.product)
+    payments?: Payment[];
 
     constructor(partial?: Partial<Product>) {
         if (partial) {
