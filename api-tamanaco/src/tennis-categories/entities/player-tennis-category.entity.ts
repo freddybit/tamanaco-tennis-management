@@ -8,6 +8,11 @@ export class PlayerTennisCategory {
     @PrimaryGeneratedColumn({ name: 'platencatkey', type: 'int' })
     plaTenCatKey!: number;
 
+    @Column({ name: 'rankingPosition', type: 'int', nullable: true })
+    rankingPosition!: number;
+
+    @Column({ name: 'lastUpdate'})
+
     @Column({ name: 'player_profilekey', type: 'int', nullable: false })
     player_profileKey!: number;
 
