@@ -1,0 +1,39 @@
+<div class="upload-container">
+  <label class="field-label">{{ label() }}</label>
+
+  <div
+    class="dropzone"
+    [class.is-dragging]="isDragging()"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+    (click)="fileInput.click()"
+  >
+    <input
+      #fileInput
+      type="file"
+      [id]="id()"
+      accept=".png, .jpg, .jpeg"
+      class="hidden-input"
+      (change)="onFileChange($event)"
+    />
+
+    @if (previewUrl() || initialPreview()) {
+      <div class="preview-box">
+        <img [src]="previewUrl() || initialPreview()" alt="Foto previa" />
+        <button type="button" class="btn-remove" (click)="removeImage($event)" title="Eliminar foto">
+          ✕
+        </button>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p class="primary-text">Arrastra tu imagen aquí o <span>haz clic para buscar</span></p>
+        <span class="support-text">Formatos permitidos: .PNG o .JPEG (Máx. 5MB)</span>
+      </div>
+    }
+  </div>
+
+  @if (errorMessage()) {
+    <span class="error-text">{{ errorMessage() }}</span>
+  }
+</div>

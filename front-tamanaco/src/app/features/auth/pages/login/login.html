@@ -1,0 +1,24 @@
+<article>
+    <section>
+        <img alt="Logo de la Liga de Tenis Tamanaco" src="images/logo/tamanaco-logo.png" />
+        <div>
+            <h2>Iniciar sesión</h2>
+            <p>Solo participantes de las Ligas de Tenis Tamanaco</p>
+        </div>
+        <form id="login">
+            <legend>
+                completar datos
+            </legend>
+            <label for="id">
+                CEDULA
+                <input id="id" type="text" placeholder="cedula" name="userId" />
+            </label>
+            <label for="password">
+                CONTRASEÑA
+                <input id="password" type="password" placeholder="contraseña" name="userPassword" />
+            </label>
+
+            <button form="login" (click)="onLogin()" type="button">Ingresar</button>
+        </form>
+    </section>
+</article>

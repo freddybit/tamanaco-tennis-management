@@ -1,0 +1,19 @@
+<div class="field-group">
+  <label [for]="id()">
+    {{ label() }}
+    @if (required()) { <span class="required-mark">*</span> }
+  </label>
+  <select
+    [id]="id()"
+    [formControl]="control()"
+    [class.invalid]="control().invalid && (control().dirty || control().touched)"
+  >
+    <option value="" disabled selected>{{ placeholder() }}</option>
+    @for (opt of options(); track opt.value) {
+      <option [value]="opt.value">{{ opt.label }}</option>
+    }
+  </select>
+  @if (control().invalid && (control().dirty || control().touched)) {
+    <span class="error-text">Selecciona una opción válida</span>
+  }
+</div>
